@@ -2,19 +2,18 @@
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.Array;
 import java.util.Arrays;
 import java.util.List;
 
 public class Main {
     public static boolean iUsedAi() {
         // TODO: please implement
-        throw new RuntimeException("Please replace this throw clause with your true/false answer to indicate whether you used AI");
+        return false;
     }
 
     public static String aiExplanation() {
         // TODO: please implement
-        throw new RuntimeException("Please replace this throw class by returning a string, in which you state why or why not you used AI, what tool you used, or which other resources you relied on instead.");
+        return "i am better than that";
     }
 
     public static void main(String[] args) {
@@ -194,7 +193,7 @@ class Assembler {
     }
 
     public Assembler(String input, StringWriter output) {
-        this.input = Arrays.asList(input.split(System.lineSeparator()));
+        this.input = Arrays.asList(input.split("(\n)|(\r\n)|(\r)"));
         this.output = output;
     }
 
@@ -203,34 +202,48 @@ class Assembler {
         output.write('\n');
     }
 
+
+
     public void assemble() throws IOException {
+        
         // TODO: to be implemented
         List<String> input = getInput();
         for (String string : input) {
-            System.out.println("heeeeeeeeeeeeeeeeeeellooooo");
-
-            List<String> ops = Arrays.asList(string.split(" "));
-
-            System.out.println(ops.getFirst());
-
-            String opcode = ops.remove(0); // why this and removeFirst causing issues ? 
-            System.out.println("heeeeeeeeeeeeeeeeeeellooooo");
-            System.out.println("heeeeeeeeeeeeeeeeeeellooooo");
+            System.out.println("output: " + string);
             
-            System.out.println(ops.getFirst());
+            String opcode = string.substring(0, 3);
             
+            String operands_string = string.substring(3, string.length());
+            operands_string = operands_string.replaceAll("\\s+", ""); // remove whitespace
+            
+            List<String> operands = Arrays.asList(
+                operands_string.strip().split(",")
+            );
+            
+            // need to check for jmps such as jgt, jlt, jeq, ... just check first char=j then do switch
+
             switch (opcode) {
-                case "ldr":
-                    
-                    break;
-                case "str":
+                case "ldr": {
+                    System.out.println("ldr: ");
+                    for (String op : operands) {
+                        System.out.println("    " + op);
+                    }
 
                     break;
-                case "add":
+                }
+                case "str": {
 
                     break;
-                default:
+                }
+                case "add": {
+
                     break;
+                }
+                case "sub": {
+
+                    break;
+                }
+                default: break;
             }
         }
     }
@@ -239,3 +252,7 @@ class Assembler {
         return input;
     }
 }
+
+
+            // http://127.0.0.1:54014/?code=bb18cef0a7a0dc6013dc&state=76be5f118c62433e892ec63b8bb6840e
+            // ^^
